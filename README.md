@@ -85,4 +85,4 @@ Healthcare database system including:
 - Change detection and tracking
 
 ## Author
-Toh Qi Hao - CSIT115 Data Management and Security
+Toh Qi Hao - Data Management and Security
