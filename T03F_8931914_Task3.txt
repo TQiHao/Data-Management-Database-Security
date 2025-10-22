@@ -1,0 +1,53 @@
+Task 3
+
+-- A)
+SELECT *
+FROM physician P 
+WHERE P.PhysicianID 
+NOT IN (SELECT PhysicianID FROM physician_original);
+
+-- Expected output:
++-------------+------------------+-------------------+------------+
+| PhysicianID | DName           | SPECIALTY         | YearOfExp  |
++-------------+------------------+-------------------+------------+
+| 90007       | Robert Tay       | Neurology         | 33         |
+| 90008       | Christopher Teo  | Gastroenterology  | 22         |
+| 90012       | Adah             | Cardiology        | 10         |
+| 90013       | Asmee            | Cardiology        | 12         |
+| 90015       | Amir             | Gastroenterology  | 22         |
++-------------+------------------+-------------------+------------+
+
+
+-- B)
+SELECT  p.PhysicianID,
+        p.DName,
+        p.SPECIALTY,
+        p.YearOfExp
+FROM    PHYSICIAN            AS p
+JOIN    physician_original   AS o  USING (PhysicianID)
+WHERE   p.SPECIALTY  != o.SPECIALTY
+    OR  p.YearOfExp != o.YearOfExp;
+
+-- Expected output:
++-------------+------------------+--------------+------------+
+| PhysicianID | DName           | SPECIALTY    | YearOfExp  |
++-------------+------------------+--------------+------------+
+| 90001       | Robert Tay       | Neurology    | 20         |
+| 90005       | Tan Peng Peng    | Neurology    | 20         |
+| 90006       | Chandra          | Cardiology   | 21         |
++-------------+------------------+--------------+------------+
+
+    
+-- C)
+SELECT *
+FROM physician_original
+WHERE PhysicianID NOT IN (
+    SELECT PhysicianID FROM PHYSICIAN
+);
+
+-- Expected output:
++-------------+------------------+-------------------+------------+
+| PhysicianID | DName           | SPECIALTY         | YearOfExp  |
++-------------+------------------+-------------------+------------+
+| 90002       | Christopher Teo  | Gastroenterology  | 20         |
++-------------+------------------+-------------------+------------+

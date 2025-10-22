@@ -1,0 +1,55 @@
+-- Task 1
+
+-- 1a)
+CREATE USER qht864_1 IDENTIFIED BY 'qht864_1';
+
+-- 1b) 
+CREATE USER qht864_2 IDENTIFIED BY 'qht864_2';
+
+-- 2)
+GRANT ALTER ON assignment3.* TO qht864_1 WITH GRANT OPTION;
+GRANT DROP ON assignment3.* TO qht864_1 WITH GRANT OPTION;
+GRANT SELECT, INSERT, UPDATE, DELETE ON assignment3.* TO qht864_1 WITH GRANT OPTION;
+
+-- 3)
+GRANT CREATE VIEW ON assignment3.* TO qht864_2 WITH GRANT OPTION;
+GRANT INSERT, UPDATE, DELETE ON assignment3.PRESCRIPTION TO qht864_2 WITH GRANT OPTION;
+
+-- 4)
+ALTER USER qht864_1
+WITH 
+  MAX_QUERIES_PER_HOUR 555
+  MAX_UPDATES_PER_HOUR 222;
+
+-- 5)
+ALTER USER 'qht864_2' PASSWORD EXPIRE;
+
+-- 6)
+SELECT 
+  user, host, db,
+  Select_priv, Insert_priv, Update_priv, Delete_priv,
+  Create_priv, Drop_priv, Alter_priv, Create_view_priv
+FROM mysql.db
+WHERE user IN ('qht864_1', 'qht864_2');
+
+-- Expected output (To have a better view, please open your notepad in full screen):
++-----------+-----------+-------------+-------------+--------------+--------------+--------------+------------+-------------+-------------------+
+| user      | host      | Select_priv | Insert_priv | Update_priv  | Delete_priv  | Create_priv  | Drop_priv | Alter_priv | Create_view_priv |
++-----------+-----------+-------------+-------------+--------------+--------------+--------------+------------+-------------+-------------------+
+| root      | localhost | Y           | Y           | Y            | Y            | Y            | Y          | Y           | Y                 |
+| qht864_1  | localhost | Y           | Y           | Y            | Y            | N            | Y          | Y           | N                 |
+| qht864_2  | localhost | N           | N           | N            | N            | N            | N          | N           | Y                 |
++-----------+-----------+-------------+-------------+--------------+--------------+--------------+------------+-------------+-------------------+
+
+SELECT 
+  User, Host, Db, Table_name, Table_priv
+FROM mysql.tables_priv
+WHERE User = 'qht864_2';
+
+-- Expected output (To have a better view, please open your notepad in full screen):
++-----------+-----------+-------------+--------------+-------------------------+
+| user      | host      | db          | Table_name   | Table_priv              |
++-----------+-----------+-------------+--------------+-------------------------+
+| qht864_2  | localhost | assignment3 | PRESCRIPTION | Insert,Update,Delete    |
++-----------+-----------+-------------+--------------+-------------------------+
+

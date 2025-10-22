@@ -1,0 +1,26 @@
+-- Task 2
+
+SELECT DISTINCT
+  CONCAT(
+    'A client with the client ID of ', c.ClientID,
+    ' and having the name ', c.PName,
+    ' is both an INCLIENT (', i.WardNumber, ', ', i.BedNumber,
+    ') and an OUTCLIENT (', o.DayBedNumber, ')'
+  ) AS Violation_Message
+FROM CLIENT c
+JOIN INCLIENT i ON c.ClientID = i.ClientID
+JOIN OUTCLIENT o ON c.ClientID = o.ClientID;
+
+-- Expected output ( (To have a better view, please open your notepad in full screen):
++-------------------------------------------------------------------------------------------------------------+
+| Violation_Message                                                                                           |
++-------------------------------------------------------------------------------------------------------------+
+| A client with the client ID of 10001 and having the name Chia Kay Kay is both an INCLIENT (201, 301)        |
+| and an OUTCLIENT (101)                                                                                      |
+| A client with the client ID of 10002 and having the name Richard Teng is both an INCLIENT (202, 307)        |
+| and an OUTCLIENT (102)                                                                                      |
+| A client with the client ID of 10003 and having the name Josephine Teo is both an INCLIENT (202, 308)       |
+| and an OUTCLIENT ()                                                                                         |
+| A client with the client ID of 10009 and having the name Teo Peng How is both an INCLIENT (201, 302)        |
+| and an OUTCLIENT (108)                                                                                      |
++-------------------------------------------------------------------------------------------------------------+
