@@ -3,7 +3,6 @@
 Database security, access control, and backup management, focusing on user privileges, constraint validation, and database backup/restore operations.
 
 ## Assignment Details
-- **Course**: CSIT115 Data Management and Security
 - **Focus**: Database Security, Access Control & Backup Management
 - **Tasks**: User Management, Constraint Validation, and Backup Operations
 
